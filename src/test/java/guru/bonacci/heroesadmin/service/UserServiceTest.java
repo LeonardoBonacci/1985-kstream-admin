@@ -1,6 +1,6 @@
 package guru.bonacci.heroesadmin.service;
 
-import static guru.bonacci.heroesadmin.service.TestData.fooUser;
+import static guru.bonacci.heroesadmin.TestData.fooUser;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;

@@ -17,6 +17,6 @@ public class Mappers {
   }
 
   public Pool mapPool(PoolDto dto) {
-    return Pool.builder().name(dto.getName()).poolType(dto.getPoolType()).build();
+    return Pool.builder().name(dto.getName()).type(dto.getType()).build();
   }
 }

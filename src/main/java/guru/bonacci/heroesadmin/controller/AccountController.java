@@ -33,7 +33,7 @@ public class AccountController {
                                 @PathVariable("userId") Long userId, 
                                 @Valid @RequestBody AccountDto dto) { 
     var account = Mappers.mapAccount(dto);
-    return accountService.createAccount(poolId, account); 
+    return accountService.createAccount(poolId, userId, account); 
   }
 
   @GetMapping("/{accountId}")

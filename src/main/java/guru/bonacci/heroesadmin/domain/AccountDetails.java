@@ -37,7 +37,7 @@ public class AccountDetails {
   private Long id;
 
   @Column(nullable = false, updatable = false)
-  private String name;
+  private String name; //TODO validate regex
 
   @Column
   private String description;
@@ -60,6 +60,6 @@ public class AccountDetails {
             +", name="+name
             +", description="+description
             +", user.name="+user.getName()
-            +", pool.name="+pool.getPoolType()+")";
+            +", pool.name="+pool.getType()+")";
   }
 }

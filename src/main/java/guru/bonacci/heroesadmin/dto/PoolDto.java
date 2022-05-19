@@ -11,5 +11,5 @@ public class PoolDto {
   private String name;
 
   @NotNull // TODO https://www.baeldung.com/javax-validations-enums
-  private String poolType;
+  private String type;
 }

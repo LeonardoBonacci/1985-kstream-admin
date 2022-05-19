@@ -47,7 +47,7 @@ public class Pool {
 
 //  @Enumerated(EnumType.STRING)
   @Column(nullable = false, updatable = false)
-  private String poolType; //TODO enum
+  private String type; //TODO enum
   
   @ManyToOne
   @JoinColumn(name = "admin_id")

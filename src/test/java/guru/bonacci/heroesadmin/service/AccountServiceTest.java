@@ -3,7 +3,6 @@ package guru.bonacci.heroesadmin.service;
 import static guru.bonacci.heroesadmin.TestData.fooUser;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,13 +16,14 @@ import guru.bonacci.heroesadmin.TestData;
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
 @Import({UserService.class, AdminService.class, PoolService.class, AccountService.class})
-class AdminServiceTest {
+class AccountServiceTest {
 
   @Autowired private TestEntityManager entityManager;
 
   @Autowired private UserService userService;
   @Autowired private AdminService adminService;
   @Autowired private PoolService poolService;
+  @Autowired private AccountService accountService;
 
   
   @Test
@@ -31,10 +31,13 @@ class AdminServiceTest {
     assertThat(userService).isNotNull();
     assertThat(adminService).isNotNull();
     assertThat(poolService).isNotNull();
+    assertThat(accountService).isNotNull();
   }
 
   Long userId;
   Long adminId;
+  Long poolId;
+  Long accountId;
   
   @BeforeEach
   void init() {
@@ -42,39 +45,33 @@ class AdminServiceTest {
     entityManager.clear();
     this.adminId = adminService.createAdmin(userId, "some details").get().getId();
     entityManager.clear();
-  }
-  
-  @Test
-  void crud() {
-     var admin = adminService.getAdmin(adminId).get();
- 
-    assertThat(admin.getBankDetails()).isEqualTo("some details");
-    assertThat(admin.getPools()).isEmpty();
-    assertThat(admin.getUser().getName()).isNotNull();
-    
+    this.poolId = poolService.createPool(adminId, TestData.fooPool()).get().getId();
     entityManager.clear();
-    adminService.delete(adminId);
-    
+    this.accountId = accountService.createAccount(poolId, userId, TestData.fooAccount()).get().getId();   
     entityManager.clear();
-    assertThat(adminService.getAdmin(adminId)).isEmpty();
-    entityManager.clear();
-    assertThat(userService.getUser(userId)).isNotNull();
-  }
+  }  
   
   @Test
   void otherStuff() {
-    var pool = poolService.createPool(adminId, TestData.fooPool()).get();
+    assertThat(accountService.getAccount(accountId)).isPresent();
+    entityManager.clear();
+    assertThat(accountService.getAccountsByPoolId(poolId).size()).isEqualTo(1);
+    entityManager.clear();
+
+    assertThat(accountService.searchAccounts(poolId, "abc")).isNotEmpty();
+//    assertThat(accountService.searchAccounts(poolId, "sfsdfsfd")).isEmpty();
+    entityManager.clear();
 
     entityManager.clear();
-    assertThat(adminService.getAdminByPoolId(pool.getId())).isPresent();
-
-    entityManager.clear();
-    Assertions.assertThrows(IllegalStateException.class, () -> adminService.delete(adminId));
+    accountService.deactivate(accountId);
     
-    poolService.deactivate(pool.getId());
     entityManager.clear();
-    adminService.delete(adminId);
+    assertThat(accountService.getAccount(accountId)).isNotPresent();
     entityManager.clear();
-    assertThat(adminService.getAdmin(adminId)).isEmpty();
-  }
+    assertThat(accountService.getAccountsByPoolId(poolId)).isEmpty();
+    entityManager.clear();
+    
+//    assertThat(accountService.searchAccounts(poolId, "abc")).isEmpty();
+
+ }
 }

@@ -17,7 +17,6 @@ import guru.bonacci.heroesadmin.domain.AdminUser;
 import guru.bonacci.heroesadmin.domain.Pool;
 import guru.bonacci.heroesadmin.dto.Mappers;
 import guru.bonacci.heroesadmin.dto.PoolDto;
-import guru.bonacci.heroesadmin.service.AccountService;
 import guru.bonacci.heroesadmin.service.AdminService;
 import guru.bonacci.heroesadmin.service.PoolService;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +29,6 @@ public class PoolController {
   
   private final PoolService poolService;
   private final AdminService adminService;
-  private final AccountService accountService;
 
 
   @PostMapping("/admins/{adminId}")
@@ -47,12 +45,12 @@ public class PoolController {
 
   @GetMapping("/{poolId}/size")
   public Integer size(@PathVariable("poolId") Long poolId) {
-    return accountService.getPoolSize(poolId);
+    return poolService.getPoolSize(poolId);
   }
 
   @GetMapping("/{poolId}/allnames")
   public List<String> allPoolNames(@PathVariable("poolId") Long poolId) {
-    return poolService.allNames();
+    return poolService.allPoolNames();
   }
 
   @GetMapping("/{poolId}/admin")

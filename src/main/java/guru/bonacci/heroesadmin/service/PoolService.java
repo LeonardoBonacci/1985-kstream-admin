@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import guru.bonacci.heroesadmin.domain.Pool;
 import guru.bonacci.heroesadmin.query.IdAndName;
+import guru.bonacci.heroesadmin.repository.AccountRepository;
 import guru.bonacci.heroesadmin.repository.AdminRepository;
 import guru.bonacci.heroesadmin.repository.PoolRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,13 +21,18 @@ public class PoolService {
 
   private final PoolRepository poolRepo;
   private final AdminRepository adminRepo;
+  private final AccountRepository accountRepo;
  
   
   public Optional<Pool> getPool(Long id) {
     return poolRepo.findById(id);
   }
 
-  public List<String> allNames() {
+  public Integer getPoolSize(Long id) {
+    return accountRepo.findByPoolId(id).size();
+  }
+
+  public List<String> allPoolNames() {
     return poolRepo.findAllProjectedBy().stream()
                   .map(IdAndName::getName)
                   .collect(Collectors.toList());
