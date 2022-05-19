@@ -41,6 +41,7 @@ public class PoolService {
   public void deactivate(Long id) {
     getPool(id).ifPresent(pool -> {
       pool.setActive(false);
+      pool.setAdmin(null);
       poolRepo.saveAndFlush(pool);
     });
   }

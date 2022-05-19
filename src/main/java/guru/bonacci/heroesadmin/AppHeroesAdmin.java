@@ -24,28 +24,48 @@ public class AppHeroesAdmin {
 		SpringApplication.run(AppHeroesAdmin.class, args);
 	}
 	
-  @Bean
-  CommandLineRunner demo(UserService users, AdminService admins, PoolService pools, AccountService accounts) {
-    return args -> {
-      var user = users.createUser(UserInfo.builder().name("us a").build());
-      log.info("in {}", user);
-  
-      var admin = admins.createAdmin(user.getId(), "12345").get();
-      log.info("in {}", admin);
-  
-      var pool = pools.createPool(admin.getId(), Pool.builder().poolType("sardex").name("coro").admin(admin).build()).get();
-      log.info("in {}", pool);
+//  @Bean
+//  CommandLineRunner poolDeactivation(UserService users, AdminService admins, PoolService pools, AccountService accounts) {
+//    return args -> {
+//      var user = users.createUser(UserInfo.builder().name("us a").build());
+//      log.info("in {}", user);
+//  
+//      var admin = admins.createAdmin(user.getId(), "12345").get();
+//      log.info("in {}", admin);
+//  
+//      var pool = pools.createPool(admin.getId(), Pool.builder().poolType("sardex").name("coro").admin(admin).build()).get();
+//      log.info("in {}", pool);
+//
+//      log.info("get pool {}", pools.getPool(pool.getId()).get());
+//      log.info("all {}", pools.allNames());
+//
+//      pools.deactivate(pool.getId());
+//
+//      log.info("all {}", pools.allNames());
+//    };
+//  }
 
-      log.info("get pool {}", pools.getPool(pool.getId()).get());
-      log.info("all {}", pools.allNames());
-
-      pools.deactivate(pool.getId());
-
-      log.info("all {}", pools.allNames());
-
-    };
-  }
-
+//  @Bean
+//  CommandLineRunner poolDeactivation(UserService users, AdminService admins, PoolService pools, AccountService accounts) {
+//    return args -> {
+//      var user = users.createUser(UserInfo.builder().name("us a").build());
+//      log.info("in {}", user);
+//  
+//      var admin = admins.createAdmin(user.getId(), "12345").get();
+//      log.info("in {}", admin);
+//  
+//      var pool = pools.createPool(admin.getId(), Pool.builder().poolType("sardex").name("coro").admin(admin).build()).get();
+//      log.info("in {}", pool);
+//
+//      log.info("get pool {}", pools.getPool(pool.getId()).get());
+//      log.info("all {}", pools.allNames());
+//
+//      pools.deactivate(pool.getId());
+//
+//      log.info("all {}", pools.allNames());
+//    };
+//  }
+//
 
 //  @Bean
 //  CommandLineRunner demo(UserService users, AdminService admins, PoolService pools, AccountService accounts) {

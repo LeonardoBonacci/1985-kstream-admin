@@ -1,5 +1,6 @@
 package guru.bonacci.heroesadmin.service;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -8,9 +9,12 @@ import org.springframework.transaction.annotation.Transactional;
 import guru.bonacci.heroesadmin.domain.AdminUser;
 import guru.bonacci.heroesadmin.domain.Pool;
 import guru.bonacci.heroesadmin.repository.AdminRepository;
+import guru.bonacci.heroesadmin.repository.PoolRepository;
 import guru.bonacci.heroesadmin.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -18,7 +22,12 @@ public class AdminService {
 
   private final AdminRepository adminRepo;
   private final UserRepository userRepo;
+  private final PoolRepository poolRepo;
 
+
+  public Optional<AdminUser> getAdmin(Long adminId) {
+    return adminRepo.findById(adminId);
+  }
 
   public Optional<AdminUser> createAdmin(Long userId, String bankDetails) {
     var user = userRepo.findById(userId).get(); //TODO optinoal
@@ -34,9 +43,15 @@ public class AdminService {
   }
 
   public void delete(Long id) { 
-    if (!adminRepo.findById(id).get().getPools().isEmpty()) {
-      // TODO throw error
+    log.info("about to delete admin {}", id);
+    var admin = adminRepo.findById(id).get(); //TODO optional
+    
+    if (!admin.getPools().isEmpty()) {
+      throw new IllegalStateException("Cannot delete while linked to pool");
     }
-    adminRepo.deleteById(id); // should not cascade usßer
+
+    log.info("deleting admin {}", id);
+    adminRepo.deleteById(id);
+    adminRepo.flush();
   }
 }

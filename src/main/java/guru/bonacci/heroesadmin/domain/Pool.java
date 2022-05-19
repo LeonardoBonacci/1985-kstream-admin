@@ -50,7 +50,7 @@ public class Pool {
   private String poolType; //TODO enum
   
   @ManyToOne
-  @JoinColumn(name = "admin_id", nullable = false)
+  @JoinColumn(name = "admin_id")
   private AdminUser admin;
   
   @Column 

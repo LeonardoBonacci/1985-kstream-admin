@@ -32,7 +32,7 @@ public class AdminUser {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @OneToOne(optional = false)
+  @OneToOne(optional = false, fetch = FetchType.LAZY)
   @PrimaryKeyJoinColumn
   private UserInfo user;
   
