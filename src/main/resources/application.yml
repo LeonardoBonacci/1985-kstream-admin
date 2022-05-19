@@ -1,0 +1,9 @@
+spring.application.name: heroes-admin-app
+
+spring:
+  jpa:
+    open-in-view: false
+    properties.hibernate.enable_lazy_load_no_trans: true
+
+  jackson.mapper.accept-case-insensitive-enums: true
+

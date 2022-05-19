@@ -13,4 +13,5 @@ curl localhost:8080/pool/1
 curl -d '{"name": "accc", "description":"bla"}' -H "Content-Type: application/json" -X POST localhost:8080/accounts/pools/1/users/1
 
 
+kubectl port-forward service/heroes-admin-app 8080:8080
 ```

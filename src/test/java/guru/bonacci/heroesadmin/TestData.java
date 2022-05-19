@@ -3,21 +3,18 @@ package guru.bonacci.heroesadmin;
 import guru.bonacci.heroesadmin.domain.AccountDetails;
 import guru.bonacci.heroesadmin.domain.Pool;
 import guru.bonacci.heroesadmin.domain.UserInfo;
-import lombok.experimental.UtilityClass;
 
-@UtilityClass
 public class TestData {
 
-  public UserInfo fooUser() {
+  public static UserInfo fooUser() {
     return UserInfo.builder().name("foo").description("bar").build();
   }
   
-  public Pool fooPool() {
+  public static Pool fooPool() {
     return Pool.builder().type(PoolType.SARDEX).name("coro").build();
   }
 
-  public AccountDetails fooAccount() {
+  public static AccountDetails fooAccount() {
     return AccountDetails.builder().name("abcd").description("bla").build();
   }
-
 }
