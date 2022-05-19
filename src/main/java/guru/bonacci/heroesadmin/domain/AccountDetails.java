@@ -12,6 +12,9 @@ import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.Where;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,6 +33,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class AccountDetails {
 
   @Id
@@ -37,19 +41,22 @@ public class AccountDetails {
   private Long id;
 
   @Column(nullable = false, updatable = false)
-  private String name; //TODO validate regex
+  private String name;
 
   @Column
   private String description;
 
+  @JsonIgnore
   @ManyToOne
   @JoinColumn(name = "user_id", nullable = false, updatable = false) 
   private UserInfo user;
 
+  @JsonIgnore
   @ManyToOne
   @JoinColumn(name = "pool_id", nullable = false, updatable = false)
   private Pool pool;
   
+  @JsonIgnore
   @Column 
   @Builder.Default
   private boolean active = true;

@@ -10,11 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import guru.bonacci.heroesadmin.TestData;
+
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
+@DirtiesContext
 @Import({UserService.class, AdminService.class, PoolService.class, AccountService.class})
 class AccountServiceTest {
 
@@ -72,6 +75,20 @@ class AccountServiceTest {
     entityManager.clear();
     
 //    assertThat(accountService.searchAccounts(poolId, "abc")).isEmpty();
-
  }
+  
+  @Test
+  void iamUserServiceTest() {
+    var user = userService.getUser(userId).get();
+    assertThat(user.getAccounts()).isNotEmpty();
+    
+    entityManager.clear();
+    user.getAccounts().get(0).setDescription("new desc");
+    userService.updateUser(user);
+
+    entityManager.clear();
+    user = userService.getUser(userId).get();
+    assertThat(user.getAccounts().get(0).getDescription()).isNotEqualTo(accountId);
+    
+  }
 }

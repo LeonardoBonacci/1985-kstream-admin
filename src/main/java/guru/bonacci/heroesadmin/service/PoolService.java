@@ -39,7 +39,9 @@ public class PoolService {
   }
 
   public Optional<Pool> createPool(Long adminId, Pool pool) {
-    var admin = adminRepo.findById(adminId).get(); //TODO optional
+    var admin = adminRepo.findById(adminId)
+         .orElseThrow(() -> new EntityNotFoundException("Cannot find admin with id " + adminId));
+
     pool.setAdmin(admin);
     return Optional.of(poolRepo.saveAndFlush(pool));
   }

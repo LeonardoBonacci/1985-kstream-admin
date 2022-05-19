@@ -25,7 +25,7 @@ public class UserService {
     return repo.saveAndFlush(user);
   }
 
-  public UserInfo updateUser(UserInfo user) { // TODO ignore accounts
+  public UserInfo updateUser(UserInfo user) {
     return repo.saveAndFlush(user);
   }
 }

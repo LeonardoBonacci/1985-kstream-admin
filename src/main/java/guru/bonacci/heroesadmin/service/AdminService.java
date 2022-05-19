@@ -1,6 +1,5 @@
 package guru.bonacci.heroesadmin.service;
 
-import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -9,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 import guru.bonacci.heroesadmin.domain.AdminUser;
 import guru.bonacci.heroesadmin.domain.Pool;
 import guru.bonacci.heroesadmin.repository.AdminRepository;
-import guru.bonacci.heroesadmin.repository.PoolRepository;
 import guru.bonacci.heroesadmin.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +20,6 @@ public class AdminService {
 
   private final AdminRepository adminRepo;
   private final UserRepository userRepo;
-  private final PoolRepository poolRepo;
 
 
   public Optional<AdminUser> getAdmin(Long adminId) {
@@ -30,7 +27,9 @@ public class AdminService {
   }
 
   public Optional<AdminUser> createAdmin(Long userId, String bankDetails) {
-    var user = userRepo.findById(userId).get(); //TODO optinoal
+    var user = userRepo.findById(userId)
+      .orElseThrow(() -> new EntityNotFoundException("Cannot find user with id " + userId));
+
     return Optional.of(doCreateAdmin(AdminUser.builder().user(user).bankDetails(bankDetails).build()));
   }
 
@@ -44,7 +43,8 @@ public class AdminService {
 
   public void delete(Long id) { 
     log.info("about to delete admin {}", id);
-    var admin = adminRepo.findById(id).get(); //TODO optional
+    var admin = adminRepo.findById(id)
+       .orElseThrow(() -> new EntityNotFoundException("Cannot find admin with id " + id));
     
     if (!admin.getPools().isEmpty()) {
       throw new IllegalStateException("Cannot delete while linked to pool");

@@ -33,7 +33,8 @@ public class PoolController {
 
   @PostMapping("/admins/{adminId}")
   public Optional<Pool> create( @PathVariable("adminId") Long adminId,
-                      @Valid @RequestBody PoolDto dto) {
+                      @Valid @RequestBody 
+                      PoolDto dto) {
     var pool = Mappers.mapPool(dto);
     return poolService.createPool(adminId, pool); 
   }

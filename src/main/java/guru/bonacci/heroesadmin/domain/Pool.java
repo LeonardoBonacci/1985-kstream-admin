@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,6 +17,10 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Where;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import guru.bonacci.heroesadmin.PoolType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,6 +38,7 @@ import lombok.ToString;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Pool {
 
   @Id
@@ -41,18 +48,20 @@ public class Pool {
   @Column(nullable = false, updatable = false, unique = true)
   private String name;
   
+  @JsonIgnore
   @Builder.Default
   @OneToMany(mappedBy = "pool")
   private List<AccountDetails> accounts = new ArrayList<>(); // can grow very large
 
-//  @Enumerated(EnumType.STRING)
+  @Enumerated(EnumType.STRING)
   @Column(nullable = false, updatable = false)
-  private String type; //TODO enum
+  private PoolType type;
   
   @ManyToOne
   @JoinColumn(name = "admin_id")
   private AdminUser admin;
   
+  @JsonIgnore
   @Column 
   @Builder.Default
   private boolean active = true;

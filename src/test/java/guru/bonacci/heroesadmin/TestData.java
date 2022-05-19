@@ -13,7 +13,7 @@ public class TestData {
   }
   
   public Pool fooPool() {
-    return Pool.builder().type("sardex").name("coro").build();
+    return Pool.builder().type(PoolType.SARDEX).name("coro").build();
   }
 
   public AccountDetails fooAccount() {

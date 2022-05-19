@@ -31,10 +31,14 @@ public class AccountService {
   }
 
   public Optional<AccountDetails> createAccount(Long poolId, Long userId, AccountDetails account) {
-    var pool = poolRepo.findById(poolId).get(); //TODO optional
+    var pool = poolRepo.findById(poolId)
+        .orElseThrow(() -> new EntityNotFoundException("Cannot find pool with id " + poolId));
     account.setPool(pool);
-    var user = userRepo.findById(userId).get(); //TODO optional
+
+    var user = userRepo.findById(userId)
+      .orElseThrow(() -> new EntityNotFoundException("Cannot find user with id " + userId));
     account.setUser(user);
+
     return Optional.of(accountRepo.saveAndFlush(account));
   }
 
