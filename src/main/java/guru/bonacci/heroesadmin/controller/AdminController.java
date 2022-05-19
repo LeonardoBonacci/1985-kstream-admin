@@ -1,5 +1,7 @@
 package guru.bonacci.heroesadmin.controller;
 
+import java.util.Optional;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,16 +17,16 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AdminController {
 
-  private final AdminService service;
+  private final AdminService adminService;
 
-  
-  @PostMapping
-  public AdminUser create(Long userId) {
-    return service.createAdmin(userId); 
+   
+  @PostMapping("/{userId}")
+  public Optional<AdminUser> register(@PathVariable("userId") Long userId) {
+    return adminService.createAdmin(userId, "foo bank details"); 
   }
-  
-  @DeleteMapping("/{id}")
-  public void delete( @PathVariable(value = "id") Long adminId) {
-    service.delete(adminId);
+
+  @DeleteMapping("/{adminId}")
+  public void unregister(@PathVariable(value = "adminId") Long adminId) { 
+    adminService.delete(adminId);
   }
 }

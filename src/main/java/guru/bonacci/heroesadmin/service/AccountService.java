@@ -24,25 +24,28 @@ public class AccountService {
     return accountRepo.findById(id);
   }
 
+  public Integer getPoolSize(Long id) {
+    return getAccountsByPoolId(id).size();
+  }
+
   public List<AccountDetails> getAccountsByPoolId(Long id) {
     return accountRepo.findByPoolId(id);
   }
 
-  public AccountDetails createAccount(Long poolId, AccountDetails account) {
-    var pool = poolRepo.findById(poolId).get();
+  public Optional<AccountDetails> createAccount(Long poolId, AccountDetails account) {
+    var pool = poolRepo.findById(poolId).get(); //TODO optional
     account.setPool(pool);
-    return accountRepo.saveAndFlush(account);
-  }
-
-  public AccountDetails updateAccount(AccountDetails account) {
-    return accountRepo.saveAndFlush(account);
+    return Optional.of(accountRepo.saveAndFlush(account));
   }
 
   public List<AccountDetails> searchAccounts(Long poolId, String accountName) {
     return accountRepo.findByPoolIdAndNameLike(poolId, "%"+accountName+"%");
   }
 
-  public void delete(Long id) {
-    throw new UnsupportedOperationException();
+  public void deactivate(Long id) {
+    getAccount(id).ifPresent(account -> {
+      account.setActive(false);
+      accountRepo.saveAndFlush(account);
+    });
   }
 }

@@ -20,16 +20,12 @@ public class AdminService {
   private final UserRepository userRepo;
 
 
-  public Optional<AdminUser> getAdmin(Long id) {
-    return adminRepo.findById(id);
+  public Optional<AdminUser> createAdmin(Long userId, String bankDetails) {
+    var user = userRepo.findById(userId).get(); //TODO optinoal
+    return Optional.of(doCreateAdmin(AdminUser.builder().user(user).bankDetails(bankDetails).build()));
   }
 
-  public AdminUser createAdmin(Long userId) {
-    var user = userRepo.findById(userId).get();
-    return createAdmin(AdminUser.builder().user(user).build());
-  }
-
-  public AdminUser createAdmin(AdminUser admin) {
+  private AdminUser doCreateAdmin(AdminUser admin) {
     return adminRepo.saveAndFlush(admin);
   }
 
@@ -39,8 +35,8 @@ public class AdminService {
 
   public void delete(Long id) { 
     if (!adminRepo.findById(id).get().getPools().isEmpty()) {
-      // throw error
+      // TODO throw error
     }
-    adminRepo.deleteById(id); // should not cascade user
+    adminRepo.deleteById(id); // should not cascade usßer
   }
 }

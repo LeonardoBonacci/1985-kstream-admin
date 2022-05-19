@@ -29,10 +29,13 @@ public class UserInfo {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   
-  @Column(nullable = false)
+  @Column(nullable = false, unique = true)
   private String name;
+
+  @Column
+  private String description;
 
   @Builder.Default
   @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-  private List<AccountDetails> accounts = new ArrayList<>(); // wallet
+  private List<AccountDetails> accounts = new ArrayList<>();
 }

@@ -28,8 +28,4 @@ public class UserService {
   public UserInfo updateUser(UserInfo user) { // TODO ignore accounts
     return repo.saveAndFlush(user);
   }
-  
-  public void deleteUser(Long id) {
-    throw new UnsupportedOperationException();
-  }
 }
