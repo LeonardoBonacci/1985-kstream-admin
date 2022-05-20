@@ -52,12 +52,20 @@ public class AccountDetails {
   @ManyToOne
   @JoinColumn(name = "pool_id", nullable = false, updatable = false)
   private Pool pool;
-  
+
   @JsonIgnore
   @Column 
   @Builder.Default
   private boolean active = true;
-  
+
+  // to facilitate cdc
+  @Column(name = "pool_name", nullable = false, updatable = false)
+  private String poolName;
+
+  // to facilitate cdc
+  @Column(name = "pool_account_id", nullable = false, updatable = false)
+  private String poolAccountId;
+
   @Override
   public String toString() {
     return "AccountDetails(id="+id

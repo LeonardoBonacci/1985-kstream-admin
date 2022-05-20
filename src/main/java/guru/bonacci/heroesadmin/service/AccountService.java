@@ -34,6 +34,8 @@ public class AccountService {
     var pool = poolRepo.findById(poolId)
         .orElseThrow(() -> new EntityNotFoundException("Cannot find pool with id " + poolId));
     account.setPool(pool);
+    account.setPoolName(pool.getName()); 
+    account.setPoolAccountId(pool.getName() + "." + account.getName()); // identifier in ledger
 
     var user = userRepo.findById(userId)
       .orElseThrow(() -> new EntityNotFoundException("Cannot find user with id " + userId));

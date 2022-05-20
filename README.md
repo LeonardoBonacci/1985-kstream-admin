@@ -3,8 +3,9 @@
 ```
 curl -X DELETE http://localhost:8083/connectors/heroes-connector
 curl -i http://localhost:8083/connectors/heroes-connector/
+curl -i http://localhost:8083/connectors/
 
-curl -i -X POST -H "Accept:application/json" -H  "Content-Type:application/json" http://localhost:8083/connectors/ -d @register-mysql-heroes.json
+curl -i -X POST -H "Accept:application/json" -H  "Content-Type:application/json" http://localhost:8083/connectors/ -d @debezium/register-mysql-heroes.json
 
 docker-compose exec mysql bash -c 'mysql -u $MYSQL_USER -p$MYSQL_PASSWORD heroes'
 

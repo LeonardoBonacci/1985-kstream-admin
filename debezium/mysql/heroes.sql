@@ -20,10 +20,41 @@ drop table if exists account_details;
 drop table if exists admin_user;
 drop table if exists pool;
 drop table if exists user_info;
-create table account_details (id bigint not null auto_increment, active bit, description varchar(255), name varchar(255) not null, pool_id bigint not null, user_id bigint not null, primary key (id)) engine=InnoDB;
-create table admin_user (id bigint not null auto_increment, bank_details varchar(255) not null, primary key (id)) engine=InnoDB;
-create table pool (id bigint not null auto_increment, active bit, name varchar(255) not null, type varchar(255) not null, admin_id bigint, primary key (id)) engine=InnoDB;
-create table user_info (id bigint not null auto_increment, description varchar(255), name varchar(255) not null, primary key (id)) engine=InnoDB;
+
+create table account_details (
+  id bigint not null auto_increment,
+  active bit,
+  description varchar(255),
+  name varchar(255) not null,
+  pool_id bigint not null,
+  pool_name varchar(255) not null,
+  pool_account_id varchar(255) not null,
+  user_id bigint not null,
+  primary key (id)
+) engine=InnoDB;
+
+create table admin_user (
+  id bigint not null auto_increment,
+  bank_details varchar(255) not null,
+  primary key (id)
+) engine=InnoDB;
+
+create table pool (
+  id bigint not null auto_increment,
+  active bit,
+  name varchar(255) not null,
+  type varchar(255) not null,
+  admin_id bigint,
+  primary key (id)
+) engine=InnoDB;
+
+create table user_info (
+  id bigint not null auto_increment,
+  description varchar(255),
+  name varchar(255) not null,
+  primary key (id)
+) engine=InnoDB;
+
 alter table account_details add constraint UK2rss7x7ld4945thr39nhjeb34 unique (user_id, pool_id);
 alter table account_details add constraint UKid9pqtbwt9mhqsy1in2ygil36 unique (name, pool_id);
 alter table pool add constraint UK_87plupp7fru334mp72lspmq93 unique (name);
