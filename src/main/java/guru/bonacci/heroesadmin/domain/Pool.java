@@ -27,9 +27,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-/**
- * TODO debezium
- */
 @Data
 @ToString(exclude = "accounts")
 @Table

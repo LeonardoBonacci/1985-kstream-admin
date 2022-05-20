@@ -2,9 +2,6 @@ spring:
   jpa:
     hibernate.ddl-auto: create
 
-  datasource.hikari.connectionTimeout: 20000
-  datasource.hikari.maximumPoolSize: 5
-
   datasource.url: jdbc:postgresql://postgres:5432/postgres
   datasource.username: postgres
   datasource.password: password

@@ -20,9 +20,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- * TODO debezium
- */
 @Data
 @Entity
 @Where(clause = "active = true")
