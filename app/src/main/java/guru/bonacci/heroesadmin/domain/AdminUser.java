@@ -39,7 +39,7 @@ public class AdminUser {
   @PrimaryKeyJoinColumn
   private UserInfo user;
   
-  @Column(name = "bank_details", nullable = false)
+  @Column(nullable = false)
   private String bankDetails;
   
   @Builder.Default
@@ -50,6 +50,6 @@ public class AdminUser {
   public String toString() {
     return "AdminUser(id="+id
         +", user.name="+user.getName()
-        +", pools.name="+pools.stream().map(Pool::getType).collect(Collectors.toList()).toString();
+        +", pools.name="+pools.stream().map(Pool::getName).collect(Collectors.toList()).toString();
   }
 }

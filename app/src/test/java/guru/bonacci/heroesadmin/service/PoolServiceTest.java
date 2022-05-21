@@ -44,7 +44,7 @@ class PoolServiceTest {
     entityManager.clear();
     this.adminId = adminService.createAdmin(userId, "some details").get().getId();
     entityManager.clear();
-    this.poolId = poolService.createPool(adminId, TestData.fooPool()).get().getId();
+    this.poolId = poolService.createPool(adminId, TestData.fooPool()).getId();
   }
   
   @Test

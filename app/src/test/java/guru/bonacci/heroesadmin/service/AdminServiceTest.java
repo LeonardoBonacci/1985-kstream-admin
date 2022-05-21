@@ -65,7 +65,7 @@ class AdminServiceTest {
   
   @Test
   void otherStuff() {
-    var pool = poolService.createPool(adminId, TestData.fooPool()).get();
+    var pool = poolService.createPool(adminId, TestData.fooPool());
 
     entityManager.clear();
     assertThat(adminService.getAdminByPoolId(pool.getId())).isPresent();

@@ -3,9 +3,11 @@ package guru.bonacci.heroesadmin.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import guru.bonacci.heroesadmin.accountinit.PoolTypeBasedInitializer;
 import guru.bonacci.heroesadmin.domain.AccountDetails;
 import guru.bonacci.heroesadmin.repository.AccountRepository;
 import guru.bonacci.heroesadmin.repository.PoolRepository;
@@ -20,6 +22,7 @@ public class AccountService {
   private final AccountRepository accountRepo;
   private final PoolRepository poolRepo;
   private final UserRepository userRepo;
+  private final ApplicationContext appContext;
   
   
   public Optional<AccountDetails> getAccount(Long id) {
@@ -41,6 +44,10 @@ public class AccountService {
       .orElseThrow(() -> new EntityNotFoundException("Cannot find user with id " + userId));
     account.setUser(user);
 
+    var poolType = pool.getType().toString().toLowerCase(); // maps uppercase enum on lowercase bean name
+    var initializer = appContext.getBean(poolType, PoolTypeBasedInitializer.class);
+    account.setStartAmount(initializer.determineStartAmount(pool));
+    
     return Optional.of(accountRepo.saveAndFlush(account));
   }
 

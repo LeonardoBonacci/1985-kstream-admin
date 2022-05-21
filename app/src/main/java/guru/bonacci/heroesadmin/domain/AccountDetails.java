@@ -45,9 +45,8 @@ public class AccountDetails {
   @Column
   private String description;
 
-  @Column(name = "start_amount")
-  @Builder.Default
-  private BigDecimal startAmount = BigDecimal.ZERO;
+  @Column
+  private BigDecimal startAmount;
 
   @JsonIgnore
   @ManyToOne
@@ -65,11 +64,11 @@ public class AccountDetails {
   private boolean active = true;
 
   // to facilitate cdc
-  @Column(name = "pool_name", nullable = false, updatable = false)
+  @Column(nullable = false, updatable = false)
   private String poolName;
 
   // to facilitate cdc
-  @Column(name = "pool_account_id", nullable = false, updatable = false)
+  @Column(nullable = false, updatable = false)
   private String poolAccountId;
 
   @Override
