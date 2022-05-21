@@ -21,9 +21,9 @@
       "transforms": "reroute,unwrap,massage",
       "transforms.reroute.type": "io.debezium.transforms.ByLogicalTableRouter",
       "transforms.reroute.topic.regex": "dbserver1.heroes.account_details",
-      "transforms.reroute.topic.replacement": "accountss",
+      "transforms.reroute.topic.replacement": "account",
       "transforms.unwrap.type": "io.debezium.transforms.ExtractNewRecordState",
       "transforms.unwrap.drop.tombstones": false,
-      "transforms.massage.type": "guru.bonacci.kafka.connect.transform.ToLedgerAccount$Value"
+      "transforms.massage.type": "guru.bonacci.kafka.connect.transform.ToLedgerAccount"
     }
 }

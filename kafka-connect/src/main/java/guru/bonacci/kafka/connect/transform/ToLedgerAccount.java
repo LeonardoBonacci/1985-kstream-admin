@@ -12,7 +12,7 @@ import org.apache.kafka.connect.data.Struct;
 import org.apache.kafka.connect.transforms.Transformation;
 
 
-public abstract class ToLedgerAccount<R extends ConnectRecord<R>> implements Transformation<R> {
+public class ToLedgerAccount<R extends ConnectRecord<R>> implements Transformation<R> {
 
   
   private static final String PURPOSE = "transform into ledger-account";
@@ -31,11 +31,11 @@ public abstract class ToLedgerAccount<R extends ConnectRecord<R>> implements Tra
     }
   }
 
-  private R applySchemaless(R record) {
+  R applySchemaless(R record) {
     throw new UnsupportedOperationException();
   }
 
-  private R applyWithSchema(R record) {
+  R applyWithSchema(R record) {
     if (record.value() == null) {
       return record; //tombstone
     }
@@ -57,7 +57,19 @@ public abstract class ToLedgerAccount<R extends ConnectRecord<R>> implements Tra
     final Struct account = new Struct(accountSchema).put("accountId", accountId).put("poolId", poolId).put("startAmount", startAmount);
     return newRecord(record, value.get("pool_account_id"), accountSchema, account);
   }
-  
+
+  Schema operatingSchema(R record) {
+    return record.valueSchema();
+  }
+
+  Object operatingValue(R record) {
+    return record.value();
+  }
+
+  R newRecord(R record, Object updatedKey, Schema updatedSchema, Object updatedValue) {
+    return record.newRecord(record.topic(), record.kafkaPartition(), null, updatedKey, updatedSchema, updatedValue, record.timestamp());
+  }
+
   @Override
   public ConfigDef config() {
     return new ConfigDef();
@@ -65,30 +77,6 @@ public abstract class ToLedgerAccount<R extends ConnectRecord<R>> implements Tra
 
   @Override
   public void close() {
-  }
-
-  protected abstract Schema operatingSchema(R record);
-
-  protected abstract Object operatingValue(R record);
-
-  protected abstract R newRecord(R record, Object updatedKey, Schema updatedSchema, Object updatedValue);
-
-  public static class Value<R extends ConnectRecord<R>> extends ToLedgerAccount<R> {
-
-    @Override
-    protected Schema operatingSchema(R record) {
-      return record.valueSchema();
-    }
-
-    @Override
-    protected Object operatingValue(R record) {
-      return record.value();
-    }
-
-    @Override
-    protected R newRecord(R record, Object updatedKey, Schema updatedSchema, Object updatedValue) {
-      return record.newRecord(record.topic(), record.kafkaPartition(), null, updatedKey, updatedSchema, updatedValue, record.timestamp());
-    }
   }
 }
 
