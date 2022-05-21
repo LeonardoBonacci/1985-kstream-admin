@@ -3,7 +3,6 @@ package guru.bonacci.kafka.connect.transform;
 import static org.apache.kafka.connect.transforms.util.Requirements.requireStruct;
 
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.apache.kafka.common.config.ConfigDef;
 import org.apache.kafka.connect.connector.ConnectRecord;
@@ -13,14 +12,10 @@ import org.apache.kafka.connect.data.Struct;
 import org.apache.kafka.connect.transforms.Transformation;
 
 
-public abstract class ExtractPayload2<R extends ConnectRecord<R>> implements Transformation<R> {
+public abstract class ToLedgerAccount<R extends ConnectRecord<R>> implements Transformation<R> {
 
   
-  public static final String OVERVIEW_DOC =
-      "Might create tombstone record based on predicate";
-
-
-  private static final String PURPOSE = "extracting payload and leaving schema behind";
+  private static final String PURPOSE = "transform into ledger-account";
 
   @Override
   public void configure(Map<String, ?> props) {
@@ -59,7 +54,6 @@ public abstract class ExtractPayload2<R extends ConnectRecord<R>> implements Tra
     String poolId = value.getString("pool_name");
     String startAmount = value.getString("start_amount");
 
-    new Struct(SchemaBuilder.string()).put("accountId", accountId)
     final Struct account = new Struct(accountSchema).put("accountId", accountId).put("poolId", poolId).put("startAmount", startAmount);
     return newRecord(record, value.get("pool_account_id"), accountSchema, account);
   }
@@ -79,7 +73,7 @@ public abstract class ExtractPayload2<R extends ConnectRecord<R>> implements Tra
 
   protected abstract R newRecord(R record, Object updatedKey, Schema updatedSchema, Object updatedValue);
 
-  public static class Value<R extends ConnectRecord<R>> extends ExtractPayload2<R> {
+  public static class Value<R extends ConnectRecord<R>> extends ToLedgerAccount<R> {
 
     @Override
     protected Schema operatingSchema(R record) {

@@ -9,11 +9,10 @@ import org.apache.kafka.connect.data.SchemaBuilder;
 import org.apache.kafka.connect.data.Struct;
 import org.apache.kafka.connect.source.SourceRecord;
 import org.junit.After;
-import org.junit.Test;
 
-public class ExtractPayloadTest {
+public class ToLedgerAccountTest {
 
-  private ExtractPayload2<SourceRecord> smt = new ExtractPayload2.Value<>();
+  private ToLedgerAccount<SourceRecord> smt = new ToLedgerAccount.Value<>();
 
   @After
   public void tearDown() throws Exception {

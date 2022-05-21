@@ -3,8 +3,7 @@
     "config": {
       "connector.class": "io.debezium.connector.mysql.MySqlConnector",
   		"tasks.max": "1",
-  		"key.converter": "org.apache.kafka.connect.json.JsonConverter",
-  		"key.converter.schemas.enable": "false",
+  		"key.converter": "org.apache.kafka.connect.storage.StringConverter",
   		"value.converter": "org.apache.kafka.connect.json.JsonConverter",
   		"value.converter.schemas.enable": "false",
       "database.hostname": "mysql",
@@ -25,6 +24,6 @@
       "transforms.reroute.topic.replacement": "accountss",
       "transforms.unwrap.type": "io.debezium.transforms.ExtractNewRecordState",
       "transforms.unwrap.drop.tombstones": false,
-      "transforms.massage.type": "guru.bonacci.kafka.connect.transform.ExtractPayload2$Value"
+      "transforms.massage.type": "guru.bonacci.kafka.connect.transform.ToLedgerAccount$Value"
     }
 }
