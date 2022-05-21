@@ -38,12 +38,12 @@ public class PoolService {
                   .collect(Collectors.toList());
   }
 
-  public Optional<Pool> createPool(Long adminId, Pool pool) {
+  public Pool createPool(Long adminId, Pool pool) {
     var admin = adminRepo.findById(adminId)
          .orElseThrow(() -> new EntityNotFoundException("Cannot find admin with id " + adminId));
 
     pool.setAdmin(admin);
-    return Optional.of(poolRepo.saveAndFlush(pool));
+    return poolRepo.saveAndFlush(pool);
   }
   
   public void deactivate(Long id) {

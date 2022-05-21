@@ -54,6 +54,7 @@ public class Pool {
   @Column(nullable = false, updatable = false)
   private PoolType type;
   
+  @JsonIgnore
   @ManyToOne
   @JoinColumn(name = "admin_id")
   private AdminUser admin;
