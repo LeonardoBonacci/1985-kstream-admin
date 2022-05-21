@@ -1,5 +1,7 @@
 package guru.bonacci.heroesadmin.domain;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -42,6 +44,10 @@ public class AccountDetails {
 
   @Column
   private String description;
+
+  @Column(name = "start_amount")
+  @Builder.Default
+  private BigDecimal startAmount = BigDecimal.ZERO;
 
   @JsonIgnore
   @ManyToOne

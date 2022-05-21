@@ -15,18 +15,21 @@
       "database.server.name": "dbserver1",
       "database.include.list": "heroes",
       "table.include.list": "heroes.account_details",
+      "column.include.list": "heroes.account_details.active,heroes.account_details.name,heroes.account_details.pool_name,heroes.account_details.pool_account_id,heroes.account_details.start_amount",
       "database.history.kafka.bootstrap.servers": "broker:29092",
       "database.history.kafka.topic": "schema-changes.heroes",
-       "transforms": "unwrap,createKey,extractKey",
+       "transforms": "unwrap,createKey,extractKey,removeFields,renameFields",
        "transforms.unwrap.type": "io.debezium.transforms.ExtractNewRecordState",
        "transforms.unwrap.drop.tombstones": false,
-       "transforms.unwrap.delete.handling.mode": "rewrite",
        "transforms.createKey.type": "org.apache.kafka.connect.transforms.ValueToKey",
        "transforms.createKey.fields": "pool_account_id",
        "transforms.extractKey.type": "org.apache.kafka.connect.transforms.ExtractField$Key",
        "transforms.extractKey.field": "pool_account_id",
        "transforms.extractKey.type": "org.apache.kafka.connect.transforms.ExtractField$Key",
-       "transforms.extractKey.field": "pool_account_id"
-
+       "transforms.extractKey.field": "pool_account_id",
+       "transforms.removeFields.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
+       "transforms.removeFields.blacklist": "pool_account_id,active",
+       "transforms.renameFields.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
+       "transforms.renameFields.renames": "name:accountId,pool_name:poolId,start_amount:startAmount"
     }
 }

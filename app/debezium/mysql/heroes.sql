@@ -24,8 +24,9 @@ drop table if exists user_info;
 create table account_details (
   id bigint not null auto_increment,
   active bit,
-  description varchar(255),
   name varchar(255) not null,
+  description varchar(255),
+  account_details start_amount decimal(19,2) not null,
   pool_id bigint not null,
   pool_name varchar(255) not null,
   pool_account_id varchar(255) not null,
