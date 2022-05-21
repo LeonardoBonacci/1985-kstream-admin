@@ -10,7 +10,7 @@ services:
      - SPRING_PROFILES_ACTIVE=${PROFILE:-docker}
 
   mysql:
-    image: leonardobonacci/example-mysql:${DEBEZIUM_VERSION}
+    image: leonardobonacci/example-mysql:1.9
     build: ./app/mysql
     ports:
      - 3306:3306
@@ -58,7 +58,7 @@ services:
       CONFLUENT_SUPPORT_CUSTOMER_ID: 'anonymous'
 
   connect:
-    image: leonardobonacci/example-connect:${DEBEZIUM_VERSION}
+    image: leonardobonacci/example-connect:1.9
     build: ./kafka-connect
     ports:
      - 8083:8083
