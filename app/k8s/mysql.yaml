@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+spec:
+  selector:
+    app: mysql
+  ports:
+  - port: 3306
+    targetPort: 3306
+    name: mysql
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+spec:
+  selector:
+    matchLabels:
+      app: mysql
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - name: mysql
+        image: leonardobonacci/example-mysql:1.9
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: "debezium"
+        - name: MYSQL_USER
+          value: "mysqluser"
+        - name: MYSQL_PASSWORD
+          value: "mysqlpw"
+        ports:
+        - containerPort: 3306
+        resources:
+          limits:
+            cpu: "0.1"
