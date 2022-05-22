@@ -1,4 +1,4 @@
-package guru.bonacci.heroesadmin.controller;
+package guru.bonacci.heroesadmin.controller.errors;
 
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Stream.concat;
@@ -19,7 +19,7 @@ import org.springframework.web.context.request.WebRequest;
 import lombok.Value;
 
 @ControllerAdvice
-class ControllerAdviceErrorHandling {
+class ValidationErrorHandling {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
