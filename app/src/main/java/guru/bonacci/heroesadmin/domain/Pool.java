@@ -45,10 +45,13 @@ public class Pool {
   @Column(nullable = false, updatable = false, unique = true)
   private String name;
   
+  @Column
+  private String description;
+
   @JsonIgnore
   @Builder.Default
   @OneToMany(mappedBy = "pool")
-  private List<AccountDetails> accounts = new ArrayList<>(); // can grow very large
+  private List<AccountDetails> accounts = new ArrayList<>(); // grows very large
 
   @Enumerated(EnumType.STRING)
   @Column(nullable = false, updatable = false)

@@ -12,7 +12,7 @@ import org.apache.kafka.connect.data.Struct;
 import org.apache.kafka.connect.transforms.Transformation;
 
 
-public class ToLedgerAccount<R extends ConnectRecord<R>> implements Transformation<R> {
+public class AccountConverter<R extends ConnectRecord<R>> implements Transformation<R> {
 
   
   private static final String PURPOSE = "transform into ledger-account";

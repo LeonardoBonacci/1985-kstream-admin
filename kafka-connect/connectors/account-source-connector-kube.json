@@ -16,14 +16,14 @@
       "database.include.list": "heroes",
       "table.include.list": "heroes.account_details",
       "column.include.list": "heroes.account_details.active,heroes.account_details.name,heroes.account_details.pool_name,heroes.account_details.pool_account_id,heroes.account_details.start_amount",
-      "database.history.kafka.bootstrap.servers": "broker:29092",
+      "database.history.kafka.bootstrap.servers": "my-cluster-kafka-bootstrap:9092",
       "database.history.kafka.topic": "schema-changes.heroes",
-      "transforms": "reroute,unwrap,massage",
+      "transforms": "reroute,unwrap,converter",
       "transforms.reroute.type": "io.debezium.transforms.ByLogicalTableRouter",
       "transforms.reroute.topic.regex": "dbserver1.heroes.account_details",
       "transforms.reroute.topic.replacement": "account",
       "transforms.unwrap.type": "io.debezium.transforms.ExtractNewRecordState",
       "transforms.unwrap.drop.tombstones": false,
-      "transforms.massage.type": "guru.bonacci.kafka.connect.transform.ToLedgerAccount"
+      "transforms.converter.type": "guru.bonacci.kafka.connect.transform.AccountConverter"
     }
 }

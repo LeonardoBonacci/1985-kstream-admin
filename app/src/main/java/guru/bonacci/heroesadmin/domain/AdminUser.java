@@ -15,6 +15,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
@@ -41,7 +42,8 @@ public class AdminUser {
   
   @Column(nullable = false)
   private String bankDetails;
-  
+
+  @JsonIgnore
   @Builder.Default
   @OneToMany(mappedBy = "admin", fetch = FetchType.EAGER)
   private List<Pool> pools = new ArrayList<>();
