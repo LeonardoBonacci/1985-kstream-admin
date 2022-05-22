@@ -25,7 +25,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @Where(clause = "active = true")
-@Table(uniqueConstraints={
+@Table(name = "account", uniqueConstraints={
   @UniqueConstraint(columnNames = {"user_id", "pool_id"}),
   @UniqueConstraint(columnNames = {"name", "pool_id"})
 })

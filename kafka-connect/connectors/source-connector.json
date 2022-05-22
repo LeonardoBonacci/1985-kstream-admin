@@ -14,7 +14,7 @@
       "database.server.name": "dbserver1",
       "decimal.handling.mode": "string",
       "database.include.list": "heroes",
-      "table.include.list": "heroes.pool,heroes.account_details",
+      "table.include.list": "heroes.pool,heroes.account",
       "database.history.kafka.bootstrap.servers": "broker:29092",
       "database.history.kafka.topic": "schema-changes.heroes",
       "transforms": "reroute,unwrap,poolConverter,accountConverter",
@@ -31,6 +31,6 @@
       "predicates.IsPoolTable.type": "org.apache.kafka.connect.transforms.predicates.TopicNameMatches",
       "predicates.IsPoolTable.pattern": "pool",
       "predicates.IsAccountTable.type": "org.apache.kafka.connect.transforms.predicates.TopicNameMatches",
-      "predicates.IsAccountTable.pattern": "account_details"
+      "predicates.IsAccountTable.pattern": "account"
     }
 }

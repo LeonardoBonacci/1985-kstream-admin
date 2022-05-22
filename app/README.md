@@ -1,14 +1,7 @@
 # heroes-admin
 
 ```
-curl -X DELETE http://localhost:8083/connectors/account-source
-curl -i http://localhost:8083/connectors/account-source
-curl -i http://localhost:8083/connectors/
-
-curl -i -X POST -H "Accept:application/json" -H  "Content-Type:application/json" http://localhost:8083/connectors/ -d @kafka-connect/account-source-connector.json
-
 docker-compose exec mysql bash -c 'mysql -u $MYSQL_USER -p$MYSQL_PASSWORD heroes'
-
 
 ```
 
