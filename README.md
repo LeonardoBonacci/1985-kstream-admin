@@ -3,7 +3,7 @@
 ```
 curl -i http://localhost:8083/connectors/
 
-curl -i -X DELETE http://localhost:8083/connectors/heroes-source && curl -i -X POST -H "Accept:application/json" -H  "Content-Type:application/json" http://localhost:8083/connectors/ -d @kafka-connect/connectors/account-source-connector-kube.json
+curl -i -X DELETE http://localhost:8083/connectors/heroes-source && curl -i -X POST -H "Accept:application/json" -H  "Content-Type:application/json" http://localhost:8083/connectors/ -d @kafka-connect/connectors/source-connector-kube.json
 
 kubectl -n kafka run kafka-consumer -ti --image=quay.io/strimzi/kafka:0.29.0-kafka-3.2.0 --rm=true --restart=Never -- bin/kafka-console-consumer.sh --bootstrap-server my-cluster-kafka-bootstrap:9092 --topic account --from-beginning
 
