@@ -10,7 +10,7 @@ services:
      - SPRING_PROFILES_ACTIVE=${PROFILE:-docker}
 
   mysql:
-    image: leonardobonacci/example-mysql:1.9
+    image: leonardobonacci/example-mysql:2.0
     build: ./app/mysql
     ports:
      - 3306:3306

@@ -27,6 +27,7 @@ spec:
       containers:
       - name: mysql
         image: leonardobonacci/example-mysql:1.9
+        imagePullPolicy: Always
         env:
         - name: MYSQL_ROOT_PASSWORD
           value: "debezium"
