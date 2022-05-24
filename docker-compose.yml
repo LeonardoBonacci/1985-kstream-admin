@@ -14,10 +14,10 @@ services:
     build: ./app/mysql
     ports:
      - 3306:3306
-    environment:
-     - MYSQL_ROOT_PASSWORD=debezium
-     - MYSQL_USER=mysqluser
-     - MYSQL_PASSWORD=mysqlpw
+    # environment:
+    #  - MYSQL_ROOT_PASSWORD=debezium
+    #  - MYSQL_USER=mysqluser
+    #  - MYSQL_PASSWORD=mysqlpw
 
   zookeeper:
     image: confluentinc/cp-zookeeper:7.0.1

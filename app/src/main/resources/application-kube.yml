@@ -1,5 +1,9 @@
 spring:
-  datasource.url: jdbc:mysql://mysql:3306/heroes
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: ${DB_NAME}
+    username: ${DB_USER}
+    password: ${DB_PASS}
 
   jpa:
     hibernate.ddl-auto: none
