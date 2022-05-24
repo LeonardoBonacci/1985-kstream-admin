@@ -6,7 +6,7 @@
   		"key.converter": "org.apache.kafka.connect.storage.StringConverter",
   		"value.converter": "org.apache.kafka.connect.json.JsonConverter",
   		"value.converter.schemas.enable": "false",
-      "database.hostname": "mysql",
+      "database.hostname": "localhost",
       "database.port": "3306",
       "database.user": "debezium",
       "database.password": "dbz",
