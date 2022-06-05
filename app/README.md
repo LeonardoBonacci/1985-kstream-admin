@@ -23,5 +23,7 @@ curl -d '{"name": "accc", "description":"bla"}' -H "Content-Type: application/js
 curl -d '{"name": "accc", "description":"bla"}' -H "Content-Type: application/json" -X POST localhost:8080/accounts/pools/3/users/1
 
 
+curl -X DELETE localhost:8080/pools/1
+
 kubectl port-forward service/heroes-admin-app 8080:8080
 ```

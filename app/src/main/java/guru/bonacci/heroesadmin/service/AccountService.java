@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.context.ApplicationContext;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import guru.bonacci.heroesadmin.accountinit.PoolTypeBasedInitializer;
 import guru.bonacci.heroesadmin.domain.AccountDetails;
+import guru.bonacci.heroesadmin.domain.kafka.KafkaAccount;
 import guru.bonacci.heroesadmin.repository.AccountRepository;
 import guru.bonacci.heroesadmin.repository.PoolRepository;
 import guru.bonacci.heroesadmin.repository.UserRepository;
@@ -22,6 +24,7 @@ public class AccountService {
   private final PoolRepository poolRepo;
   private final UserRepository userRepo;
   private final ApplicationContext appContext;
+  private final KafkaTemplate<String, KafkaAccount> kafkaTemplate;
   
   
   public Optional<AccountDetails> getAccount(Long id) {
@@ -48,6 +51,9 @@ public class AccountService {
     var initializer = appContext.getBean(poolType, PoolTypeBasedInitializer.class);
     account.setStartAmount(initializer.determineStartAmount(pool));
     
+    var kafkaAccount = KafkaAccount.from(account); 
+    kafkaTemplate.send("account", kafkaAccount.identifier(), kafkaAccount);
+    
     return Optional.of(accountRepo.saveAndFlush(account));
   }
 
@@ -59,6 +65,8 @@ public class AccountService {
   public void deactivate(Long id) {
     getAccount(id).ifPresent(account -> {
       account.setActive(false);
+      
+      kafkaTemplate.send("account", account.getPoolAccountId(), null);
       accountRepo.saveAndFlush(account);
     });
   }

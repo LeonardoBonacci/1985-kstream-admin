@@ -25,7 +25,7 @@ public class AdminService {
     return adminRepo.findById(adminId);
   }
 
-  @Transactional(transactionManager = "transactionManager")
+  @Transactional("transactionManager")
   public Optional<AdminUser> createAdmin(Long userId, String bankDetails) {
     var user = userRepo.findById(userId)
       .orElseThrow(() -> new EntityNotFoundException("Cannot find user with id " + userId));
@@ -41,7 +41,7 @@ public class AdminService {
     return adminRepo.findByPools(Pool.builder().id(poolId).build());
   }
 
-  @Transactional(transactionManager = "transactionManager")
+  @Transactional("transactionManager")
   public void delete(Long id) { 
     log.info("about to delete admin {}", id);
     var admin = adminRepo.findById(id)
