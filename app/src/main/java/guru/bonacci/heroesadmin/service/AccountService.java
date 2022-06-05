@@ -15,7 +15,6 @@ import guru.bonacci.heroesadmin.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class AccountService {
 
@@ -33,6 +32,7 @@ public class AccountService {
     return accountRepo.findByPoolId(id);
   }
 
+  @Transactional(transactionManager = "transactionManager")
   public Optional<AccountDetails> createAccount(Long poolId, Long userId, AccountDetails account) {
     var pool = poolRepo.findById(poolId)
         .orElseThrow(() -> new EntityNotFoundException("Cannot find pool with id " + poolId));
@@ -55,6 +55,7 @@ public class AccountService {
     return accountRepo.findByPoolIdAndNameLike(poolId, "%"+accountName+"%");
   }
 
+  @Transactional(transactionManager = "transactionManager")
   public void deactivate(Long id) {
     getAccount(id).ifPresent(account -> {
       account.setActive(false);

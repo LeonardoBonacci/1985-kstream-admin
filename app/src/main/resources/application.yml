@@ -1,7 +1,11 @@
 spring.application.name: heroes-admin-app
 
 spring:
-  datasource.url: jdbc:mysql://localhost:3306/heroes
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/heroes
+    username: mysqluser
+    password: mysqlpw
 
   jpa:
     hibernate.ddl-auto: none

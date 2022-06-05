@@ -1,23 +1,23 @@
 ---
 version: '2'
 services:
-  heroes-admin:
-    image: leonardobonacci/heroes-admin
-    build: ./app
-    ports:
-     - "8080:8080"
-    environment:
-     - SPRING_PROFILES_ACTIVE=${PROFILE:-docker}
+#  heroes-admin:
+#    image: leonardobonacci/heroes-admin
+#    build: .
+#    ports:
+#     - "8080:8080"
+#    environment:
+#     - SPRING_PROFILES_ACTIVE=${PROFILE:-docker}
 
   mysql:
     image: leonardobonacci/example-mysql:2.0
-    build: ./app/mysql
+    build: ./mysql
     ports:
      - 3306:3306
-    # environment:
-    #  - MYSQL_ROOT_PASSWORD=debezium
-    #  - MYSQL_USER=mysqluser
-    #  - MYSQL_PASSWORD=mysqlpw
+    environment:
+     - MYSQL_ROOT_PASSWORD=debezium
+     - MYSQL_USER=mysqluser
+     - MYSQL_PASSWORD=mysqlpw
 
   zookeeper:
     image: confluentinc/cp-zookeeper:7.0.1
@@ -56,18 +56,3 @@ services:
       CONFLUENT_METRICS_REPORTER_TOPIC_REPLICAS: 1
       CONFLUENT_METRICS_ENABLE: 'true'
       CONFLUENT_SUPPORT_CUSTOMER_ID: 'anonymous'
-
-  connect:
-    image: leonardobonacci/example-connect:1.9
-    build: ./kafka-connect
-    ports:
-     - 8083:8083
-    links:
-     - broker
-     - mysql
-    environment:
-     - BOOTSTRAP_SERVERS=broker:29092
-     - GROUP_ID=1
-     - CONFIG_STORAGE_TOPIC=my_connect_configs
-     - OFFSET_STORAGE_TOPIC=my_connect_offsets
-     - STATUS_STORAGE_TOPIC=my_connect_statuses

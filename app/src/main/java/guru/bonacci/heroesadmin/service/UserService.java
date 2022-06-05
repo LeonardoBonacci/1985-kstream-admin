@@ -10,7 +10,6 @@ import guru.bonacci.heroesadmin.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class UserService {
 
@@ -21,10 +20,12 @@ public class UserService {
     return repo.findById(id);
   }
 
+  @Transactional(transactionManager = "transactionManager")
   public UserInfo createUser(UserInfo user) {
     return repo.saveAndFlush(user);
   }
 
+  @Transactional(transactionManager = "transactionManager")
   public UserInfo updateUser(UserInfo user) {
     return repo.saveAndFlush(user);
   }

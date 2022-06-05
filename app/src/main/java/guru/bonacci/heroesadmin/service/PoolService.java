@@ -15,7 +15,6 @@ import guru.bonacci.heroesadmin.repository.PoolRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class PoolService {
 
@@ -38,6 +37,7 @@ public class PoolService {
                   .collect(Collectors.toList());
   }
 
+  @Transactional(transactionManager = "transactionManager")
   public Pool createPool(Long adminId, Pool pool) {
     var admin = adminRepo.findById(adminId)
          .orElseThrow(() -> new EntityNotFoundException("Cannot find admin with id " + adminId));
@@ -46,6 +46,7 @@ public class PoolService {
     return poolRepo.saveAndFlush(pool);
   }
   
+  @Transactional(transactionManager = "transactionManager")
   public void deactivate(Long id) {
     getPool(id).ifPresent(pool -> {
       pool.setActive(false);
@@ -53,5 +54,4 @@ public class PoolService {
       poolRepo.saveAndFlush(pool);
     });
   }
-
 }
